@@ -1,6 +1,3 @@
-# adapted from https://stackoverflow.com/a
-# Retrieved 2025-12-19, License - CC BY-SA 3.0
-
 import os
 import errno
 
