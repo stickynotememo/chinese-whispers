@@ -10,9 +10,9 @@ section   .text
           ; syscall                           ; invoke operating system to exit
 
 _1_assembly_func:
-	mov rax, message
+	lea rax, [rel message]
 	ret
 	
 section   .data
 
-message:  db        "Hello from Assembly.", 21      ; note the newline at the end; Define variables in the data section
+message:  db        "Hello from Assembly.", 0xA, 23      ; note the newline at the end; Define variables in the data section

@@ -1,0 +1,25 @@
+use std::ffi::CStr;
+use std::ffi::c_char;
+
+#[cfg(target_family = "unix")]
+extern "C" {
+    fn _2_c_func() -> *const c_char;
+}
+
+fn main() -> Result<(), String> {
+    let raw_string_pointer: *const c_char = unsafe { _2_c_func() };
+    if raw_string_pointer.is_null() {
+        return Err(String::from("pointer is null"));
+    };
+    let c_string = unsafe { CStr::from_ptr(raw_string_pointer) }; // SAFETY: we are assuming the
+    // string is null terminated since we created it ourselves in a previous program. However, if
+    // it is not, it is UB.
+
+    let Some(string) = c_string.to_str() else {
+        return Err(String::from("string should be null terminated"))
+    };
+    
+    println!("{}", string);
+    Ok(())
+}
+
